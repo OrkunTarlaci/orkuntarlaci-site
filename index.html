@@ -236,7 +236,7 @@
       color: white; transform: scale(1.1) rotate(5deg);
     }
 
-    /* --- PROJECTS SECTION (NEW) --- */
+    /* --- PROJECTS SECTION --- */
     .project-card {
       display: block; /* Link wrap */
       background: var(--surface);
@@ -295,21 +295,36 @@
     .contact-item:nth-child(2):hover .contact-icon-lg { background: #25D366; }
     .contact-item:nth-child(3):hover .contact-icon-lg { background: #4285F4; }
 
-    /* --- RESPONSIVE --- */
+    /* --- RESPONSIVE FIXES (DÜZELTMELER) --- */
     @media (max-width: 900px) {
+      /* Hero Düzeltme */
       .hero-grid { grid-template-columns: 1fr; text-align: center; gap: 3rem; }
       .hero { padding-top: 120px; align-items: flex-start; }
       .hero-content h1 { font-size: 3rem; }
       .hero-actions { align-items: center; width: 100%; }
       .btn-row { justify-content: center; }
+
+      /* Hakkımda Kısmı Düzeltmesi (1. Sorun Çözümü) */
+      .about-grid { grid-template-columns: 1fr !important; gap: 2rem; }
+      #about .container { grid-template-columns: 1fr !important; }
+
+      /* İletişim Kutucukları Düzeltmesi (2. Sorun Çözümü - Daha Büyük Butonlar) */
+      .contact-methods { flex-direction: column; width: 100%; gap: 1rem; }
+      .contact-item { width: 100%; max-width: 100%; flex-direction: row; padding: 1.5rem; justify-content: flex-start; }
+      .contact-icon-lg { margin-right: 1rem; width: 50px; height: 50px; font-size: 1.5rem; }
+      
+      /* Mobil Menü Düzeltmesi (3. Sorun Çözümü - Patlak Verme) */
       .nav-links { display: none; } 
-      .menu-toggle { display: block; }
+      .menu-toggle { display: flex; align-items: center; justify-content: center; z-index: 1002; }
       
       .nav-links.active {
         display: flex; position: fixed; top: 0; right: 0; bottom: 0;
-        width: 80%; max-width: 300px; background: var(--surface);
+        width: 85%; max-width: 320px; background: var(--surface);
         flex-direction: column; padding: 6rem 2rem; gap: 2rem; align-items: flex-start;
-        border-left: 1px solid var(--border); z-index: 1001;
+        border-left: 1px solid var(--border); 
+        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
+        z-index: 1001; /* Menü header'ın üstünde */
+        overflow-y: auto;
       }
     }
 
@@ -335,7 +350,8 @@
         <a href="#home">Ana Sayfa</a>
         <a href="#services">Hizmetler</a>
         <a href="#about">Hakkımda</a>
-        <a href="#projects">Projelerim</a> <a href="#contact">İletişim</a>
+        <a href="#projects">Projelerim</a> 
+        <a href="#contact">İletişim</a>
         <a href="tel:+905523875272" style="color:var(--primary); font-weight:700; margin-left:1rem;">
           <i class="fa-solid fa-phone" style="margin-right:5px"></i> 0552 387 5272
         </a>
@@ -506,20 +522,26 @@
           <div class="contact-methods">
             <a href="tel:+905523875272" class="contact-item">
               <div class="contact-icon-lg"><i class="fa-solid fa-phone-volume"></i></div>
-              <span style="font-weight:700; font-size:1.1rem">Ara</span>
-              <span style="font-size:0.9rem; color:var(--text-muted)">0552 387 5272</span>
+              <div style="text-align:left">
+                <span style="font-weight:700; font-size:1.1rem; display:block">Ara</span>
+                <span style="font-size:0.9rem; color:var(--text-muted)">0552 387 5272</span>
+              </div>
             </a>
             
             <a href="https://wa.me/905523875272?text=Merhaba%20Orkun,%20bilgisayar%20servisi%20için%20yazıyorum." target="_blank" class="contact-item">
               <div class="contact-icon-lg"><i class="fa-brands fa-whatsapp"></i></div>
-              <span style="font-weight:700; font-size:1.1rem">WhatsApp</span>
-              <span style="font-size:0.9rem; color:var(--text-muted)">Mesaj Gönder</span>
+              <div style="text-align:left">
+                <span style="font-weight:700; font-size:1.1rem; display:block">WhatsApp</span>
+                <span style="font-size:0.9rem; color:var(--text-muted)">Mesaj Gönder</span>
+              </div>
             </a>
 
             <a href="https://www.google.com/maps/search/?api=1&query=Abbasağa+Mahallesi,+Beşiktaş/İstanbul" target="_blank" class="contact-item">
               <div class="contact-icon-lg"><i class="fa-solid fa-location-dot"></i></div>
-              <span style="font-weight:700; font-size:1.1rem">Konum</span>
-              <span style="font-size:0.9rem; color:var(--text-muted)">Beşiktaş / Abbasağa</span>
+              <div style="text-align:left">
+                <span style="font-weight:700; font-size:1.1rem; display:block">Konum</span>
+                <span style="font-size:0.9rem; color:var(--text-muted)">Beşiktaş / Abbasağa</span>
+              </div>
             </a>
           </div>
         </div>
