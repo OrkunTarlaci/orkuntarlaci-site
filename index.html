@@ -68,21 +68,29 @@
       position: fixed; top: 0; left: 0; right: 0; height: var(--nav-height);
       background: var(--surface-glass); backdrop-filter: blur(20px);
       -webkit-backdrop-filter: blur(20px);
-      border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000;
+      border-bottom: 1px solid rgba(255,255,255,0.05); 
+      z-index: 1002; /* ARTIRILDI */
       display: flex; align-items: center;
+      transition: background 0.3s ease, backdrop-filter 0.3s ease, -webkit-backdrop-filter 0.3s ease, border-color 0.3s ease;
+    }
+    header.menu-open {
+      background: transparent;
+      backdrop-filter: none;
+      -webkit-backdrop-filter: none;
+      border-bottom: transparent;
     }
     header .container { display: flex; justify-content: space-between; align-items: center; height: 100%; }
     .brand { font-weight: 800; font-size: 1.4rem; display: flex; align-items: center; gap: 0.6rem; }
     .brand i { color: var(--primary); filter: drop-shadow(0 0 10px rgba(79,70,229,0.5)); }
-    .nav-links { display: flex; gap: 2.5rem; align-items: center; }
-    .nav-links a.nav-item { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); position: relative; padding: 5px 0; }
-    .nav-links a.nav-item:hover { color: var(--text); }
-    .nav-links a.nav-item::after {
+    .desktop-nav { display: flex; gap: 2.5rem; align-items: center; }
+    .desktop-nav a.nav-item { font-weight: 500; font-size: 0.95rem; color: var(--text-muted); position: relative; padding: 5px 0; }
+    .desktop-nav a.nav-item:hover { color: var(--text); }
+    .desktop-nav a.nav-item::after {
       content: ''; position: absolute; bottom: 0; left: 0; width: 0; height: 2px;
       background: linear-gradient(90deg, var(--primary), var(--secondary));
       transition: 0.3s; border-radius: 2px;
     }
-    .nav-links a.nav-item:hover::after { width: 100%; }
+    .desktop-nav a.nav-item:hover::after { width: 100%; }
     .phone-link {
       color: var(--primary); font-weight: 700; margin-left: 1rem;
       display: flex; align-items: center; gap: 0.5rem;
@@ -90,7 +98,99 @@
       border-radius: 50px; transition: all 0.3s ease;
     }
     .phone-link:hover { background: rgba(79, 70, 229, 0.2); transform: translateY(-2px); }
-    .menu-toggle { display: none; font-size: 1.6rem; cursor: pointer; color: var(--text); padding: 10px; z-index: 1002; }
+
+    /* Hamburger */
+    .menu-toggle {
+      display: none;
+      width: 44px; height: 44px;
+      background: transparent;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      cursor: pointer;
+      position: relative;
+      z-index: 1003; /* HAMBURGER DAHA YÜKSEK */
+      padding: 0;
+    }
+    .menu-toggle span {
+      display: block;
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+      transition: 0.3s cubic-bezier(0.68, -0.6, 0.32, 1.6);
+      border-radius: 2px;
+    }
+    .menu-toggle span:nth-child(1) { top: 12px; }
+    .menu-toggle span:nth-child(2) { top: 50%; transform: translate(-50%, -50%); }
+    .menu-toggle span:nth-child(3) { bottom: 12px; }
+    .menu-toggle.active span:nth-child(1) { top: 50%; transform: translate(-50%, -50%) rotate(45deg); }
+    .menu-toggle.active span:nth-child(2) { opacity: 0; transform: translate(-50%, -50%) scale(0.5); }
+    .menu-toggle.active span:nth-child(3) { bottom: 50%; transform: translate(-50%, 50%) rotate(-45deg); }
+
+    /* Mobil menü (tam ekran, koyu arka planlı) */
+    .mobile-menu {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      gap: 1.2rem;
+      transform: translateX(100%);
+      transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
+      z-index: 1001; /* HEADER'IN ALTINDA, İÇERİĞİN ÜSTÜNDE */
+      padding: 2rem;
+    }
+    .mobile-menu.active { transform: translateX(0); }
+    .mobile-menu a.nav-item {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #ffffff;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      padding: 14px 24px;
+      border-radius: 14px;
+      transition: background 0.25s, transform 0.2s;
+      width: auto;
+      min-width: 250px;
+      justify-content: center;
+    }
+    .mobile-menu a.nav-item i {
+      width: 28px;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #a5b4fc;
+    }
+    .mobile-menu a.nav-item:hover {
+      background: rgba(255, 255, 255, 0.12);
+      transform: scale(1.03);
+    }
+    .mobile-menu .phone-link {
+      margin-top: 0.8rem;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 14px 28px;
+      border-radius: 14px;
+      font-weight: 600;
+      font-size: 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      box-shadow: 0 10px 25px rgba(79, 70, 229, 0.4);
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .mobile-menu .phone-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 30px rgba(79, 70, 229, 0.55);
+    }
 
     /* Hero */
     .hero { min-height: 95vh; display: flex; align-items: center; padding-top: var(--nav-height); position: relative; }
@@ -212,21 +312,15 @@
     }
     .contact-item:hover .contact-icon-lg { color: white; background: var(--primary); transform: scale(1.1); }
 
+    /* Footer */
+    .site-footer {
+      text-align: center; padding: 3rem 0; color: var(--text-muted); font-size: 0.9rem;
+    }
+
     /* Responsive */
     @media (max-width: 900px) {
+      .desktop-nav { display: none; }
       .menu-toggle { display: block; }
-      .nav-links {
-        position: fixed; top: 0; right: 0; bottom: 0; width: 80%; max-width: 300px;
-        background: var(--surface); flex-direction: column; justify-content: center;
-        align-items: center; padding: 2rem; gap: 2rem;
-        box-shadow: -10px 0 30px rgba(0,0,0,0.5);
-        transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-        z-index: 1001; border-left: 1px solid var(--border);
-      }
-      .nav-links.active { transform: translateX(0); }
-      .nav-links a.nav-item { font-size: 1.2rem; font-weight: 600; width: 100%; text-align: center; padding: 10px; border-radius: 10px; }
-      .nav-links a.nav-item:hover { background: rgba(79, 70, 229, 0.05); }
-      .phone-link { margin: 0; width: 100%; justify-content: center; background: var(--primary); color: white; padding: 1rem; }
       .hero { padding-top: 130px; align-items: flex-start; text-align: center; }
       .hero-grid { grid-template-columns: 1fr; gap: 3rem; }
       .hero-actions { width: 100%; align-items: center; }
@@ -254,8 +348,13 @@
   <header>
     <div class="container">
       <a href="#home" class="brand"><i class="fa-solid fa-bolt"></i> Orkun Tarlacı</a>
-      <div class="menu-toggle" id="mobile-menu-btn"><i class="fa-solid fa-bars"></i></div>
-      <nav class="nav-links" id="nav-links">
+      
+      <button class="menu-toggle" id="mobile-menu-btn" aria-label="Menüyü aç">
+        <span></span><span></span><span></span>
+      </button>
+
+      <!-- Masaüstü navigasyon -->
+      <nav class="desktop-nav">
         <a href="#home" class="nav-item">Ana Sayfa</a>
         <a href="#services" class="nav-item">Hizmetler</a>
         <a href="#about" class="nav-item">Hakkımda</a>
@@ -265,6 +364,16 @@
       </nav>
     </div>
   </header>
+
+  <!-- Mobil menü header'ın dışına alındı -->
+  <nav class="mobile-menu" id="mobile-menu">
+    <a href="#home" class="nav-item"><i class="fa-solid fa-house"></i> Ana Sayfa</a>
+    <a href="#services" class="nav-item"><i class="fa-solid fa-screwdriver-wrench"></i> Hizmetler</a>
+    <a href="#about" class="nav-item"><i class="fa-solid fa-user"></i> Hakkımda</a>
+    <a href="#projects" class="nav-item"><i class="fa-solid fa-folder-open"></i> Projelerim</a>
+    <a href="#contact" class="nav-item"><i class="fa-solid fa-envelope"></i> İletişim</a>
+    <a href="tel:+905523875272" class="phone-link"><i class="fa-solid fa-phone"></i> 0552 387 5272</a>
+  </nav>
 
   <main>
     <section id="home" class="hero">
@@ -332,62 +441,51 @@
     </section>
 
     <section id="projects" class="section-padding">
-  <div class="container">
-    <div class="section-header fade-in-up">
-      <h2>Web Sitesi Projelerim</h2>
-      <p style="color:var(--text-muted); font-size:1.1rem">Geliştirdiğim bazı web tasarım ve arayüz çalışmaları.</p>
-    </div>
-    <div class="cards-grid">
-      <!-- Akıllı Tahtalar -->
-      <a href="Siteler/akillitahtalar/index.html" target="_blank" class="project-card fade-in-up delay-100">
-        <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
-        <i class="fa-solid fa-chalkboard project-icon"></i>
-        <h3>Akıllı Tahtalar</h3>
-        <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Eğitim kurumları için bilgilendirme arayüzü.</p>
-      </a>
-
-      <!-- Anime Portalı -->
-      <a href="Siteler/Anime Site/index.html" target="_blank" class="project-card fade-in-up delay-200">
-        <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
-        <i class="fa-solid fa-eye project-icon" style="color:#9333ea"></i>
-        <h3>Anime Portalı</h3>
-        <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Modern, karanlık modlu manga & anime arayüzü.</p>
-      </a>
-
-      <!-- Fitness & Spor -->
-      <a href="Siteler/Fitness site/index.html" target="_blank" class="project-card fade-in-up delay-300">
-        <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
-        <i class="fa-solid fa-dumbbell project-icon" style="color:#ef4444"></i>
-        <h3>Fitness & Spor</h3>
-        <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Spor salonu tanıtım ve antrenman sitesi.</p>
-      </a>
-
-      <!-- SA Yapı İnşaat -->
-      <a href="Siteler/SA Yapı İnşaat Site/index.html" target="_blank" class="project-card fade-in-up delay-100">
-        <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
-        <i class="fa-solid fa-helmet-safety project-icon" style="color:#f59e0b"></i>
-        <h3>SA Yapı İnşaat</h3>
-        <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Kurumsal inşaat firması web sitesi.</p>
-      </a>
-
-      <!-- Usta Dokunuş Teknik Servis -->
-      <a href="Siteler/usta dokunuşu teknik servis/index.html" target="_blank" class="project-card fade-in-up delay-200">
-        <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
-        <i class="fa-solid fa-screwdriver-wrench project-icon" style="color:#FF650D"></i>
-        <h3>Usta Dokunuş Teknik Servis</h3>
-        <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Esenyurt beyaz eşya, kombi ve klima servisi tanıtım sitesi.</p>
-      </a>
-
-      <!-- Obez Bilişim (Bilgisayar Logosu ile Güncellendi) -->
-      <a href="Siteler/Obez-Bili-im-main/index.html" target="_blank" class="project-card fade-in-up delay-300">
-        <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
-        <i class="fa-solid fa-laptop-code project-icon" style="color:#4f46e5"></i>
-        <h3>Obez Bilişim</h3>
-        <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Beşiktaş'ın teknolojik çözüm noktası – bilgisayar, yazılım ve IT desteği.</p>
-      </a>
-    </div>
-  </div>
-</section>
+      <div class="container">
+        <div class="section-header fade-in-up">
+          <h2>Web Sitesi Projelerim</h2>
+          <p style="color:var(--text-muted); font-size:1.1rem">Geliştirdiğim bazı web tasarım ve arayüz çalışmaları.</p>
+        </div>
+        <div class="cards-grid">
+          <a href="Siteler/akillitahtalar/index.html" target="_blank" class="project-card fade-in-up delay-100">
+            <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
+            <i class="fa-solid fa-chalkboard project-icon"></i>
+            <h3>Akıllı Tahtalar</h3>
+            <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Eğitim kurumları için bilgilendirme arayüzü.</p>
+          </a>
+          <a href="Siteler/Anime Site/index.html" target="_blank" class="project-card fade-in-up delay-200">
+            <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
+            <i class="fa-solid fa-eye project-icon" style="color:#9333ea"></i>
+            <h3>Anime Portalı</h3>
+            <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Modern, karanlık modlu manga & anime arayüzü.</p>
+          </a>
+          <a href="Siteler/Fitness site/index.html" target="_blank" class="project-card fade-in-up delay-300">
+            <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
+            <i class="fa-solid fa-dumbbell project-icon" style="color:#ef4444"></i>
+            <h3>Fitness & Spor</h3>
+            <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Spor salonu tanıtım ve antrenman sitesi.</p>
+          </a>
+          <a href="Siteler/SA Yapı İnşaat Site/index.html" target="_blank" class="project-card fade-in-up delay-100">
+            <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
+            <i class="fa-solid fa-helmet-safety project-icon" style="color:#f59e0b"></i>
+            <h3>SA Yapı İnşaat</h3>
+            <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Kurumsal inşaat firması web sitesi.</p>
+          </a>
+          <a href="Siteler/usta dokunuşu teknik servis/index.html" target="_blank" class="project-card fade-in-up delay-200">
+            <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
+            <i class="fa-solid fa-screwdriver-wrench project-icon" style="color:#FF650D"></i>
+            <h3>Usta Dokunuş Teknik Servis</h3>
+            <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Esenyurt beyaz eşya, kombi ve klima servisi tanıtım sitesi.</p>
+          </a>
+          <a href="Siteler/Obez-Bili-im-main/index.html" target="_blank" class="project-card fade-in-up delay-300">
+            <i class="fa-solid fa-arrow-up-right-from-square project-link-icon"></i>
+            <i class="fa-solid fa-laptop-code project-icon" style="color:#4f46e5"></i>
+            <h3>Obez Bilişim</h3>
+            <p style="color:var(--text-muted); margin-top:0.5rem; font-size:0.9rem">Beşiktaş'ın teknolojik çözüm noktası – bilgisayar, yazılım ve IT desteği.</p>
+          </a>
+        </div>
+      </div>
+    </section>
 
     <section id="contact" class="section-padding">
       <div class="container fade-in-up">
@@ -413,8 +511,8 @@
     </section>
   </main>
 
-  <footer>
-    <div class="container" style="text-align:center; padding:3rem 0; color:var(--text-muted); font-size:0.9rem">
+  <footer class="site-footer">
+    <div class="container">
       <div style="margin-bottom:1.5rem"><a href="#home" style="font-weight:800; font-size:1.5rem; color:var(--text)"><i class="fa-solid fa-bolt" style="color:var(--primary)"></i> Orkun Tarlacı</a></div>
       <p style="margin-bottom:1rem">Beşiktaş Abbasağa Mahallesi, İstanbul</p>
       <div style="opacity:0.6">© 2026 Tüm Hakları Saklıdır.</div>
@@ -423,42 +521,39 @@
 
   <script>
     const menuBtn = document.getElementById('mobile-menu-btn');
-    const navLinks = document.getElementById('nav-links');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const header = document.querySelector('header');
     const body = document.body;
 
+    function openMenu() {
+      mobileMenu.classList.add('active');
+      menuBtn.classList.add('active');
+      header.classList.add('menu-open');
+      menuBtn.setAttribute('aria-label', 'Menüyü kapat');
+      body.style.overflow = 'hidden';
+    }
+
+    function closeMenu() {
+      mobileMenu.classList.remove('active');
+      menuBtn.classList.remove('active');
+      header.classList.remove('menu-open');
+      menuBtn.setAttribute('aria-label', 'Menüyü aç');
+      body.style.overflow = 'auto';
+    }
+
     menuBtn.addEventListener('click', () => {
-      navLinks.classList.toggle('active');
-      const icon = menuBtn.querySelector('i');
-      if (navLinks.classList.contains('active')) {
-        icon.classList.remove('fa-bars');
-        icon.classList.add('fa-xmark');
-        body.style.overflow = 'hidden';
+      if (mobileMenu.classList.contains('active')) {
+        closeMenu();
       } else {
-        icon.classList.remove('fa-xmark');
-        icon.classList.add('fa-bars');
-        body.style.overflow = 'auto';
+        openMenu();
       }
     });
 
-    document.querySelectorAll('.nav-links a').forEach(link => {
-      link.addEventListener('click', () => {
-        navLinks.classList.remove('active');
-        menuBtn.querySelector('i').classList.remove('fa-xmark');
-        menuBtn.querySelector('i').classList.add('fa-bars');
-        body.style.overflow = 'auto';
-      });
+    document.querySelectorAll('#mobile-menu a').forEach(link => {
+      link.addEventListener('click', closeMenu);
     });
 
-    document.addEventListener('click', (e) => {
-      if (!navLinks.contains(e.target) && !menuBtn.contains(e.target) && navLinks.classList.contains('active')) {
-        navLinks.classList.remove('active');
-        menuBtn.querySelector('i').classList.remove('fa-xmark');
-        menuBtn.querySelector('i').classList.add('fa-bars');
-        body.style.overflow = 'auto';
-      }
-    });
-
-    // Intersection Observer for animations
+    // Animasyon gözlemcisi
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
